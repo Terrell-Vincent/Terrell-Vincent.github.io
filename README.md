@@ -22,3 +22,4 @@ First time using this software
 -You can add a button that will remove the selection from the interface so if a button is accidentally pressed you won’t be forced to go to that floor.    
 <img width="834" alt="p1 Terrell Vincent" src="https://user-images.githubusercontent.com/91630436/193115572-8d51f976-64ea-4299-8d41-9b84507976a6.png">  
 I added an undo button so that for example if you have a child with you and they click multiple floors that you are not trying to go to. With this button you'll be able to avoid having to go to each floor that was pressed.
+![Elevator Interface GIF](https://user-images.githubusercontent.com/91630436/193119111-b96bec3b-a90e-4b68-b5ea-cd8800debcea.gif)
