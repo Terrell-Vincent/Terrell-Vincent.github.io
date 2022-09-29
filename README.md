@@ -11,7 +11,8 @@
 	-Clicking the floor number to go to that floor    
 	-Clicking the button to close the doors manually or keep them open    
 **Rare uses**   
-	-The emergency call button    
+	-The emergency call button   
+  
 -The interface makes these common things very easy to use. Every button has a label that makes it very easy to understand exactly what will happen if that button is pressed. This even has braille on the labels to help visually impared users be able to use their elevator with little to no problem.    
 -The usual course of events is once the user has entered the elevator they observe the panel in order to select which floor they wish to be taken to. Once they have seen which floor they wish to be taken to they then press the button that corresponds with that floor. Once the button is pressed they wait for the doors to automatically close or if they are in a rush they will click the button that closes the doors manually.    
 -The elevator supports the user by having labels next to each button so that it is easy to understand what will happen if that button is pressed.    
