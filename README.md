@@ -1,6 +1,4 @@
-# Terrell-Vincent.github.io
-Touch screen elevator interface  
-First time using this software  
+# CS 3366 Human Computer Interaction Project 1   
 
 **C Requirements**  
 ![Project Name](https://user-images.githubusercontent.com/91630436/193114053-e0a8f9ed-78a3-4220-88c7-ed361ccab4e5.gif)
