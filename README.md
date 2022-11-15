@@ -10,5 +10,12 @@
   
 **B Requirements**   
    ![Magic_Mirror 1](https://user-images.githubusercontent.com/91630436/201795225-e8fcdf35-676f-4f1e-aa90-fbdc9cabef4a.png)
-   ![Magic_Mirror 2](https://user-images.githubusercontent.com/91630436/201795242-a7c2087e-e5c8-497d-8489-73707a5c9469.png)
+   ![Magic_Mirror 2](https://user-images.githubusercontent.com/91630436/201795242-a7c2087e-e5c8-497d-8489-73707a5c9469.png)  
+
+
+
+https://user-images.githubusercontent.com/91630436/201797277-8cef6489-7d67-402b-b8eb-b7646745dd80.mp4
+
+
+
 
