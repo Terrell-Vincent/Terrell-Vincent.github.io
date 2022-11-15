@@ -1,641 +1,249 @@
-int xPoint;
-int yPoint;
-int leftX = 27;
-int leftY = 592;
-int rightX = 233;
-int rightY = 592;
-boolean closed;
+int xPoint, yPoint;
+PImage img, backImg, cloudImg;
+Table table, tableNews;
+Boolean healthButton = false;
 
-void setup() {
-  size(1000, 800);
+void setup(){
+  size(1200, 800);
   noStroke();
+  img = loadImage("Calendar icon.png");
+  backImg = loadImage("Bathroom.jpg");
+  cloudImg = loadImage("cloudLogo.png");
+  table = loadTable("Todo.csv", "header");
+  tableNews = loadTable("BreakingNews.csv", "header");
+  fill(0);
+
 }
 
-void draw() {
-  background(100, 30, 250);
-
-  color white = color(255, 255, 255);
-  fill(200);
-  line(mouseX, 20, mouseX, 80);
-  line(20, mouseY, 80, mouseY);
-  rect(350, 40, 450, 650); //Background
-
-  color black = color(0, 0, 0);
-  fill(black);
-  noStroke();
-  rect(475, 103, 200, 100); // floor indicator
-
-  color gray = color(100, 100, 100);
-  fill(gray);
-  rect(400, 363, 341, 250); //Touch screen
-
-  textSize(50);
-  fill(255, 0, 0);
-  text("--", 560, 175); // floor counter
-
-  textSize(40);
-  fill(black);
-  text("Select a floor", 465, 295);
-
-  fill(white);
-  stroke(black);  //Floor buttons
-  rect(400, 363, 85, 100);
-  rect(485, 363, 85, 100);
-  rect(570, 363, 85, 100);
-  rect(655, 363, 85, 100);
-  rect(400, 463, 85, 100);
-  rect(485, 463, 85, 100);
-  rect(570, 463, 85, 100);
-  rect(655, 463, 85, 100);
-
-  fill(black);// Floor numbers
-  text("1", 435, 420);
-  text("2", 520, 420);
-  text("3", 600, 420);
-  text("4", 685, 420);
-  text("5", 435, 515);
-  text("6", 520, 515);
-  textSize(30);
-  text("Open", 578, 515);
-  text("Close", 665, 515);
-  
-  fill(255, 0, 0);
-  rect(400, 563, 85, 50);//emergency button
-  fill(black);
-  textSize(15);
-  text("Emergency", 408, 585);
-  
-  rect(485, 563, 170, 46);
-  
-  textSize(20);
-  fill(white);
-  int m = minute();
+void draw()
+{
+  background(230);
+  image(backImg, 0, 0, 1200, 800);
+  int d = day();
+  int mon = month();
+  int s = second();
+  int min = minute();
   int h = hour();
-  text(h + " :", 685, 594);
-  text(m, 715, 594);
-
-  fill(black);
-  rect(135, 505, 50, 10);//Floor 1
-  fill(white);
-  textSize(20);
-  text("Floor 1", 44, 527);
-  
-  fill(black);
-  rect(135, 405, 50, 10);//Floor 2
-  fill(white);
-  textSize(20);
-  text("Floor 2", 44, 427);
-  
-  fill(black);
-  rect(135, 305, 50, 10);//Floor 3
-  fill(white);
-  textSize(20);
-  text("Floor 3", 44, 327);
-  
-  fill(black);
-  rect(135, 205, 50, 10);//Floor 4
-  fill(white);
-  textSize(20);
-  text("Floor 4", 44, 227);
-  
-  fill(black);
-  rect(135, 105, 50, 10);//Floor 5
-  fill(white);
-  textSize(20);
-  text("Floor 5", 44, 127);
-  
-  fill(black);
-  rect(135, 5, 50, 10);//Floor 6
-  fill(white);
-  textSize(20);
-  text("Floor 6", 44, 27);
-
-  fill(black);
-  rect(leftX, leftY, 75, 75);//left door
-  rect(rightX, rightY, 75, 75);//right door
-
-  textSize(50);
-  if (xPoint > 399 && xPoint < 481 && yPoint > 365 && yPoint < 461)//if button 1 is pressed
-  {
-    fill(255, 0, 0);//turn the button on
-    stroke(black);
-    rect(400, 363, 85, 100);
-    fill(black);
-    text("1", 435, 420);
-    
-    fill(white);
-    noStroke();
-    rect(424, 231, 300, 100);
-    fill(black);
-    textSize(30);
-    text("Proceeding to floor 1", 440, 300);
-    fill(black);
-    textSize(50);
-    
-    if (leftX != 100) //close the doors
-      leftX = leftX + 1;
-    if (rightX != 165)
-      rightX = rightX - 1;
+    fill(255);
+    stroke(0);
+    rect(0, 150, 250, 500); //Todo/events
+    textSize(35);
+    fill(0);
+    text("To Do", 90, 185);
+    fill(255);
+    rect(73, 56, 105, 73);
+    fill(0);
+    text((mon + "/" + d), 82, 95);
+    textSize(20);
+    int list = 215;
+    for (TableRow row : table.rows())
+    {
+      String task = row.getString("Need to do");
       
-    if(leftX == 100 && rightX == 165)
-    {
-      closed = true;
+      text(("-" + task), 15, list);
+      list = list + 40;
     }
+    image(img, 50, 0, 150, 150);//Current date
     
-    if (closed == true && leftY > 505 && rightY > 505)// get to the floor
-    {
-      if(leftY != 505)
-      {
-        leftY = leftY - 1;
-      }
-      if(rightY != 505)
-      {
-        rightY = rightY - 1;
-      }
-    }
-    else if(closed == true && leftY < 505 && rightY < 505)
-    {
-      if(leftY != 505 && rightY != 505)
-      {
-        leftY = leftY + 1;
-        rightY = rightY + 1;
-      }
-    }
-    if(leftY == 505 && rightY == 505)//open the doors
-    {
-      rect(475, 103, 200, 100);
-      fill(255, 0, 0);
-      text("1", 560, 175);
-      while(leftX != 27)
-      {
-        leftX = leftX - 1;
-      }
-      while(rightX != 233)
-      {
-        rightX = rightX + 1;
-      }
-      fill(white);
-      noStroke();
-      rect(424, 231, 300, 100);
-      fill(black);
-      textSize(30);
-      text("Have a nice day", 475, 300);
-      closed = false;
-    }
-  }
-  if (xPoint > 486 && xPoint < 570 && yPoint > 365 && yPoint < 461)//if button 2 is pressed
-  {
-    fill(255, 0, 0);
-    stroke(black);
-    rect(485, 363, 85, 100);
-    fill(black);
-    text("2", 520, 420);
-    
-    fill(white);
-    noStroke();
-    rect(424, 231, 300, 100);
-    fill(black);
-    textSize(30);
-    text("Proceeding to floor 2", 440, 300);
-    fill(black);
+    fill(173,216,250);
+    textSize(35);
+    rect(0, 650, 250, 150); //Weather forecast
+    image(cloudImg, 20, 700, 100, 100);
+    fill(255);
+    text("Weather", 60, 690);
+    fill(0);
     textSize(50);
+    text("72", 160, 760);
+    textSize(25);
+    text("o", 209, 720);
     
-    if (leftX != 100) //close the doors
-      leftX = leftX + 1;
-    if (rightX != 165)
-      rightX = rightX - 1;
-
-    if(leftX == 100 && rightX == 165)
+    fill(255);
+    rect(950, 0, 250, 500); //News
+    fill(0);
+    text("News", 1040, 50);
+    textSize(20);
+    int newsList = 100;
+    for (TableRow row : tableNews.rows())
     {
-      closed = true;
+      String tasks = row.getString("Breaking News");
+      
+      text(("-" + tasks), 952, newsList);
+      newsList = newsList + 40;
     }
     
-    if (closed == true && leftY > 405 && rightY > 405)// get to the floor
+    fill(255);
+    rect(1050, 500, 150, 150); //Lights
+    fill(0);
+    textSize(35);
+    text("Lights", 1070, 580);
+    if (xPoint > 1050 && xPoint < 1200 && yPoint > 500 && yPoint < 650)//If light is pressed
     {
-      if(leftY != 405)
-      {
-        leftY = leftY - 1;
-      }
-      if(rightY != 405)
-      {
-        rightY = rightY - 1;
-      }
-    }
-    else if(closed == true && leftY < 405 && rightY < 405)
-    {
-      if(leftY != 405 && rightY != 405)
-      {
-        leftY = leftY + 1;
-        rightY = rightY + 1;
-      }
-    }
-    
-    if(leftY == 405 && rightY == 405)//open the doors
-    {
-      rect(475, 103, 200, 100);
       fill(255, 0, 0);
-      text("2", 560, 175);
-      while(leftX != 27)
-      {
-        leftX = leftX - 1;
-      }
-      while(rightX != 233)
-      {
-        rightX = rightX + 1;
-      }
-      fill(white);
-      noStroke();
-      rect(424, 231, 300, 100);
-      fill(black);
-      textSize(30);
-      text("Have a nice day", 475, 300);
-      closed = false;
+      rect(750, 500, 75, 75);//red
+      fill(255, 165, 0);
+      rect(825, 500, 75, 75);//orange
+      fill(255, 255, 0);
+      rect(900, 500, 75, 75);//yellow
+      fill(0, 255, 0);
+      rect(975, 500, 75, 75);//green
+      fill(0, 0, 255);
+      rect(750, 575, 75, 75);//blue
+      fill(255, 0, 255);
+      rect(825, 575, 75, 75);//purple
+      fill(255);
+      rect(900, 575, 75, 75);//white
+      fill(222,184,135);
+      rect(975, 575, 75, 75);//tan
     }
-  }
-  if (xPoint > 573 && xPoint < 650 && yPoint > 365 && yPoint < 461)//if button 3 is pressed
-  {
-    fill(255, 0, 0);
-    stroke(black);
-    rect(570, 363, 85, 100);
-    fill(black);
-    text("3", 600, 420);
     
-    fill(white);
-    noStroke();
-    rect(424, 231, 300, 100);
-    fill(black);
-    textSize(30);
-    text("Proceeding to floor 3", 440, 300);
-    fill(black);
+    if (xPoint > 750 && xPoint < 825 && yPoint > 500 && yPoint < 575)//red selected
+    {
+      noFill();
+      strokeWeight(16);
+      stroke(255, 0, 0);
+      rect(250, 0, 700, 800);
+    }
+    if (xPoint > 825 && xPoint < 900 && yPoint > 500 && yPoint < 575)//orange selected
+    {
+      noFill();
+      strokeWeight(16);
+      stroke(255, 165, 0);
+      rect(250, 0, 700, 800);
+    }
+    if (xPoint > 900 && xPoint < 975 && yPoint > 500 && yPoint < 575)//yellow selected
+    {
+      noFill();
+      strokeWeight(16);
+      stroke(255, 255, 0);
+      rect(250, 0, 700, 800);
+    }
+    if (xPoint > 975 && xPoint < 1050 && yPoint > 500 && yPoint < 575)//green selected
+    {
+      noFill();
+      strokeWeight(16);
+      stroke(0, 255, 0);
+      rect(250, 0, 700, 800);
+    }
+    if (xPoint > 750 && xPoint < 825 && yPoint > 575 && yPoint < 650)//blue selected
+    {
+      noFill();
+      strokeWeight(16);
+      stroke(0, 0, 255);
+      rect(250, 0, 700, 800);
+    }
+    if (xPoint > 825 && xPoint < 900 && yPoint > 575 && yPoint < 650)//purple selected
+    {
+      noFill();
+      strokeWeight(16);
+      stroke(255, 0, 255);
+      rect(250, 0, 700, 800);
+    }
+    if (xPoint > 900 && xPoint < 975 && yPoint > 575 && yPoint < 650)//white selected
+    {
+      noFill();
+      strokeWeight(16);
+      stroke(255);
+      rect(250, 0, 700, 800);
+    }
+    if (xPoint > 975 && xPoint < 1050 && yPoint > 575 && yPoint < 650)//tan selected
+    {
+      noFill();
+      strokeWeight(16);
+      stroke(222,184,135);
+      rect(250, 0, 700, 800);
+    }
+    
+    strokeWeight(1);
+    stroke(0);
+    fill(255);
+    square(1050, 650, 150); //Health button
+    fill(0);
+    text("Health\nButton", 1065, 720);
+    if (xPoint > 1050 && xPoint < 1200 && yPoint > 650 && yPoint < 800)//health button pressed
+    {
+      healthButton = true;
+    }
+    
+    fill(255);
+    rect(495, 24, 185, 42);
+    fill(0);
     textSize(50);
-    
-    if (leftX != 100)
-      leftX = leftX + 1;
-    if (rightX != 165)
-      rightX = rightX - 1;
-
-    if(leftX == 100 && rightX == 165)
-    {
-      closed = true;
-    }
-    
-    if (closed == true && leftY > 305 && rightY > 305)// get to the floor
-    {
-      if(leftY != 305)
-      {
-        leftY = leftY - 1;
-      }
-      if(rightY != 305)
-      {
-        rightY = rightY - 1;
-      }
-    }
-    else if(closed == true && leftY < 305 && rightY < 305)
-    {
-      if(leftY != 305 && rightY != 305)
-      {
-        leftY = leftY + 1;
-        rightY = rightY + 1;
-      }
-    }
-    
-    if(leftY == 305 && rightY == 305)//open the doors
-    {
-      rect(475, 103, 200, 100);
-      fill(255, 0, 0);
-      text("3", 560, 175);
-      while(leftX != 27)
-      {
-        leftX = leftX - 1;
-      }
-      while(rightX != 233)
-      {
-        rightX = rightX + 1;
-      }
-      fill(white);
-      noStroke();
-      rect(424, 231, 300, 100);
-      fill(black);
-      textSize(30);
-      text("Have a nice day", 475, 300);
-      closed = false;
-    }
-  }
-  if (xPoint > 657 && xPoint < 737 && yPoint > 365 && yPoint < 461)//if button 4 is pressed
-  {
-    fill(255, 0, 0);
-    stroke(black);
-    rect(655, 363, 85, 100);
-    fill(black);
-    text("4", 685, 420);
-    
-    fill(white);
-    noStroke();
-    rect(424, 231, 300, 100);
-    fill(black);
-    textSize(30);
-    text("Proceeding to floor 4", 440, 300);
-    fill(black);
-    textSize(50);
-    
-    if (leftX != 100)
-      leftX = leftX + 1;
-    if (rightX != 165)
-      rightX = rightX - 1;
-
-    if(leftX == 100 && rightX == 165)
-    {
-      closed = true;
-    }
-    
-    if (closed == true && leftY > 205 && rightY > 205)// get to the floor
-    {
-      if(leftY != 205)
-      {
-        leftY = leftY - 1;
-      }
-      if(rightY != 205)
-      {
-        rightY = rightY - 1;
-      }
-    }
-    else if(closed == true && leftY < 205 && rightY < 205)
-    {
-      if(leftY != 205 && rightY != 205)
-      {
-        leftY = leftY + 1;
-        rightY = rightY + 1;
-      }
-    }
-    
-    if(leftY == 205 && rightY == 205)//open the doors
-    {
-      rect(475, 103, 200, 100);
-      fill(255, 0, 0);
-      text("4", 560, 175);
-      while(leftX != 27)
-      {
-        leftX = leftX - 1;
-      }
-      while(rightX != 233)
-      {
-        rightX = rightX + 1;
-      }
-      fill(white);
-      noStroke();
-      rect(424, 231, 300, 100);
-      fill(black);
-      textSize(30);
-      text("Have a nice day", 475, 300);
-      closed = false;
-    }
-  }
-  if (xPoint > 403 && xPoint < 482 && yPoint > 467 && yPoint < 559)//if button 5 is pressed
-  {
-    fill(255, 0, 0);
-    stroke(black);
-    rect(400, 463, 85, 100);
-    fill(black);
-    text("5", 435, 515);
-    
-    fill(white);
-    noStroke();
-    rect(424, 231, 300, 100);
-    fill(black);
-    textSize(30);
-    text("Proceeding to floor 5", 440, 300);
-    fill(black);
-    textSize(50);
-    
-    if (leftX != 100)
-      leftX = leftX + 1;
-    if (rightX != 165)
-      rightX = rightX - 1;
-
-    if(leftX == 100 && rightX == 165)
-    {
-      closed = true;
-    }
-    
-    if (closed == true && leftY > 105 && rightY > 105)// get to the floor
-    {
-      if(leftY != 105)
-      {
-        leftY = leftY - 1;
-      }
-      if(rightY != 105)
-      {
-        rightY = rightY - 1;
-      }
-    }
-    else if(closed == true && leftY < 105 && rightY < 105)
-    {
-      if(leftY != 105 && rightY != 105)
-      {
-        leftY = leftY + 1;
-        rightY = rightY + 1;
-      }
-    }
-    
-    if(leftY == 105 && rightY == 105)//open the doors
-    {
-      rect(475, 103, 200, 100);
-      fill(255, 0, 0);
-      text("5", 560, 175);
-      while(leftX != 27)
-      {
-        leftX = leftX - 1;
-      }
-      while(rightX != 233)
-      {
-        rightX = rightX + 1;
-      }
-      fill(white);
-      noStroke();
-      rect(424, 231, 300, 100);
-      fill(black);
-      textSize(30);
-      text("Have a nice day", 475, 300);
-      closed = false;
-    }
-  }
-  if (xPoint > 487 && xPoint < 568 && yPoint > 467 && yPoint < 559)//if button 6 is pressed
-  {
-    fill(255, 0, 0);
-    stroke(black);
-    rect(485, 463, 85, 100);
-    fill(black);
-    text("6", 520, 515);
-    
-    fill(white);
-    noStroke();
-    rect(424, 231, 300, 100);
-    fill(black);
-    textSize(30);
-    text("Proceeding to floor 6", 440, 300);
-    fill(black);
-    textSize(50);
-    
-    if (leftX != 100)//Close the door
-      leftX = leftX + 1;
-    if (rightX != 165)
-      rightX = rightX - 1;
-
-    if(leftX == 100 && rightX == 165)
-    {
-      closed = true;
-    }
-    
-    if (closed == true && leftY > 5 && rightY > 5)// get to the floor
-    {
-      if(leftY != 5)
-      {
-        leftY = leftY - 1;
-      }
-      if(rightY != 5)
-      {
-        rightY = rightY - 1;
-      }
-    }
-    else if(closed == true && leftY < 5 && rightY < 5)
-    {
-      if(leftY != 5 && rightY != 5)
-      {
-        leftY = leftY + 1;
-        rightY = rightY + 1;
-      }
-    }
-  }
+    text((h + ":" + min + ":" + s), 500, 60); //Time
   
-  if(leftY == 5 && rightY == 5)//open the doors
-    {
-      rect(475, 103, 200, 100);
-      fill(255, 0, 0);
-      text("6", 560, 175);
-      while(leftX != 27)
-      {
-        leftX = leftX - 1;
-      }
-      while(rightX != 233)
-      {
-        rightX = rightX + 1;
-      }
-      fill(white);
-      noStroke();
-      rect(424, 231, 300, 100);
-      fill(black);
-      textSize(30);
-      text("Have a nice day", 475, 300);
-      closed = false;
-    }
-  if (xPoint > 657 && xPoint < 737 && yPoint > 465 && yPoint < 557)//if button CLOSE is pressed
+  if (healthButton == true)//If the health button is pressed
   {
-    fill(255, 0, 0);//turn the button on
-    stroke(black);
-    rect(655, 463, 85, 100);
-    fill(black);
-    textSize(30);
-    text("Close", 665, 515);
-    
-    if (leftX != 100) //close the doors
-      leftX = leftX + 1;
-    if (rightX != 165)
-      rightX = rightX - 1;
-    
-    if(leftY == 505 && rightY == 505)//close the doors
-    {
-      rect(475, 103, 200, 100);
-      fill(255, 0, 0);
-      text("1", 560, 175);
-      while(leftX != 27)
-      {
-        leftX = leftX - 1;
-      }
-      while(rightX != 233)
-      {
-        rightX = rightX + 1;
-      }
-    }
-    closed = true;
-  }
-  if (xPoint > 574 && xPoint < 651 && yPoint > 467 && yPoint < 558)//if button OPEN is pressed
-  {
-    fill(255, 0, 0);//turn the button on
-    stroke(black);
-    rect(570, 463, 85, 100);
-    fill(black);
-    textSize(30);
-    text("Open", 578, 515);
-    
-    if (closed == true && leftX != 27) // open the doors
-      leftX = leftX - 1;
-    if (closed == true && rightX != 233)
-      rightX = rightX + 1;
-    
-  }
-  if(xPoint > 404 && xPoint < 482 && yPoint > 566 && yPoint < 607)
-  {
-    fill(white);
+    fill(230);
     noStroke();
-    rect(424, 231, 300, 100);
-    fill(black);
-    textSize(30);
-    text("Emergency Stop", 475, 300);
+    image(backImg, 0, 0, 1200, 800); //making the background
+    stroke(0);
+    fill(255);
+    rect(495, 24, 185, 42);
+    fill(0);
+    textSize(50);
+    text((h + ":" + min + ":" + s), 500, 60);//Time
     
-    fill(255, 0, 0);//turn the 1 button on
-    stroke(black);
-    rect(400, 363, 85, 100);
-    fill(black);
-    text("1", 435, 420);
+    fill(0, 0, 55);
+    rect(0, 150, 250, 500); //sleep information
+    textSize(35);
+    fill(255);
+    text("      Sleep\nInformation", 35, 185);
+    textSize(20);
+    text("How long you\nslept last night", 10, 280);
+    text(" Deep Vs Light:", 5, 380);
+    text("5.5hrs/1.0hrs", 135, 380);
+    text(" This weeks sleep:", 5, 450);
+    text("53.2hrs", 160, 450);
+    text(" Last weeks sleep:", 5, 510);
+    text("51.8hrs", 160, 510);
+    textSize(35);
+    text("6.5hrs", 160, 300);
     
-    fill(255, 0, 0);//turn the 2 button on
-    stroke(black);
-    rect(485, 363, 85, 100);
-    fill(black);
-    text("2", 520, 420);
+    fill(255);
+    rect(950, 60, 250, 150); //Total mirror time
+    fill(0);
+    textSize(25);
+    text("Mirror Time", 1015, 90);
+    textSize(35);
+    int m = millis();
+    text(m / 1000 + "s", 1060, 130);
     
-    fill(255, 0, 0);//turn the 3 button on
-    stroke(black);
-    rect(570, 363, 85, 100);
-    fill(black);
-    text("3", 600, 420);
+    fill(255);
+    rect(950, 150, 250, 300);//Weight Information
+    fill(0);
+    textSize(25);
+    text("Current Weight", 1000, 190);
+    textSize(35);
+    text("145lbs", 1020, 250);
+    textSize(25);
+    text("Last Week Weight", 990, 320);
+    textSize(35);
+    text("149lbs", 1020, 380); 
     
-    fill(255, 0, 0);//turn the 4 button on
-    stroke(black);
-    rect(655, 363, 85, 100);
-    fill(black);
-    text("4", 685, 420);
+    fill(255);
+    rect(950, 450, 250, 200);//Walking Information
+    textSize(25);
+    fill(0);
+    text("Walking Info", 1010, 488);
+    text("Steps: 5,091", 970, 515);
+    text("Standing: 5.5hrs", 970, 545);
+    text("Exercise: 47.5min", 970, 575);
     
-    fill(255, 0, 0);//turn the 5 button on
-    stroke(black);
-    rect(400, 463, 85, 100);
-    fill(black);
-    text("5", 435, 515);
+    fill(255);
+    square(1050, 650, 150); //Back to main
+    fill(0);
+    textSize(35);
+    text("Main\nMenu", 1085, 700);
     
-    fill(255, 0, 0);//turn the 6 button on
-    stroke(black);
-    rect(485, 463, 85, 100);
-    fill(black);
-    text("6", 520, 515);
-    
-    fill(255, 0, 0);//turn the open button on
-    stroke(black);
-    rect(570, 463, 85, 100);
-    fill(black);
-    textSize(30);
-    text("Open", 578, 515);
-    
-    fill(255, 0, 0);//turn the close button on
-    stroke(black);
-    rect(655, 463, 85, 100);
-    fill(black);
-    textSize(30);
-    text("Close", 665, 515);
+    if (xPoint > 1050 && xPoint < 1200 && yPoint > 650 && yPoint < 800 && healthButton == true)
+    {
+      healthButton = false;
+    }
   }
 }
 
-void mouseClicked() {
-  println(xPoint + "," + yPoint);
+void mouseClicked()
+{
   xPoint = mouseX;
   yPoint = mouseY;
+  println(xPoint + "," + yPoint);
 }
